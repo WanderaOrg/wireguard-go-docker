@@ -3,7 +3,7 @@ FROM golang:1.13-alpine3.10 as builder
 ARG wg_go_tag=v0.0.20191012
 ARG wg_tag=0.0.20190702
 
-RUN apk add --update git build-base libmnl-dev iptables
+RUN apk add --no-cache --update git build-base libmnl-dev iptables
 
 RUN git clone https://git.zx2c4.com/wireguard-go && \
     cd wireguard-go && \
@@ -21,7 +21,7 @@ RUN git clone https://git.zx2c4.com/WireGuard && \
 
 FROM alpine:3.10
 
-RUN apk add --update bash libmnl iptables
+RUN apk add --no-cache --update bash libmnl iptables ip6tables
 
 COPY --from=builder /usr/bin/wireguard-go /usr/bin/wg* /usr/bin/
 COPY entrypoint.sh /entrypoint.sh
